@@ -1,9 +1,16 @@
+const config = require('eslint-config-standard-typescript-prettier')
+
 module.exports = {
-  extends: 'standard-with-typescript',
-  parserOptions: {
-    project: './tsconfig.json'
-  },
+  ...config,
+  parserOptions: { project: './tsconfig.json' },
   rules: {
-    '@typescript-eslint/strict-boolean-expressions': 'off'
-  }
+    ...config.rules,
+    '@typescript-eslint/no-explicit-any': 'error',
+    'prettier/prettier': [
+      'error',
+      {
+        endOfLine: 'auto',
+      },
+    ],
+  },
 }
