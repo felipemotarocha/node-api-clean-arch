@@ -62,14 +62,16 @@ describe('SignUp Controller', () => {
       body: {
         email: 'any_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('name'))
+    expect(httpResponse.body.message).toEqual(
+      new MissingParamError('name').message,
+    )
   })
 
   test('should return 400 if no email is provided', async () => {
@@ -79,14 +81,16 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_email',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('email'))
+    expect(httpResponse.body.message).toEqual(
+      new MissingParamError('email').message,
+    )
   })
 
   test('should return 400 if no password is provided', async () => {
@@ -96,14 +100,16 @@ describe('SignUp Controller', () => {
       body: {
         name: 'any_name',
         email: 'any_email@mail.com',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new MissingParamError('password'))
+    expect(httpResponse.body.message).toEqual(
+      new MissingParamError('password').message,
+    )
   })
 
   test('should return 400 if no password confirmation is provided', async () => {
@@ -120,8 +126,8 @@ describe('SignUp Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(
-      new MissingParamError('password_confirmation'),
+    expect(httpResponse.body.message).toEqual(
+      new MissingParamError('passwordConfirmation').message,
     )
   })
 
@@ -133,14 +139,16 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'different_password',
+        passwordConfirmation: 'different_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new InvalidPasswordConfirmationError())
+    expect(httpResponse.body.message).toEqual(
+      new InvalidPasswordConfirmationError().message,
+    )
   })
 
   test('should return 400 if invalid email is provided', async () => {
@@ -153,14 +161,16 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(400)
-    expect(httpResponse.body).toEqual(new InvalidParamError('email'))
+    expect(httpResponse.body.message).toEqual(
+      new InvalidParamError('email').message,
+    )
   })
 
   test('should return 500 if EmailValidator throws', async () => {
@@ -175,14 +185,14 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body.message).toEqual(new ServerError().message)
   })
 
   test('should return 500 if AddAccount throws', async () => {
@@ -197,14 +207,14 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'invalid_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
     const httpResponse = await sut.handle(httpRequest)
 
     expect(httpResponse.statusCode).toBe(500)
-    expect(httpResponse.body).toEqual(new ServerError())
+    expect(httpResponse.body.message).toEqual(new ServerError().message)
   })
 
   test('should call EmailValidator with correct email', async () => {
@@ -219,7 +229,7 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
@@ -237,7 +247,7 @@ describe('SignUp Controller', () => {
         name: 'any_name',
         email: 'any_email@mail.com',
         password: 'any_password',
-        password_confirmation: 'any_password',
+        passwordConfirmation: 'any_password',
       },
     }
 
@@ -257,7 +267,7 @@ describe('SignUp Controller', () => {
         name: 'valid_name',
         email: 'valid_email@email.com',
         password: 'valid_password',
-        password_confirmation: 'valid_password',
+        passwordConfirmation: 'valid_password',
       },
     }
 

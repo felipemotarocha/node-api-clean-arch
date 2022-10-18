@@ -27,7 +27,7 @@ export class SignUpController implements Controller {
         'name',
         'email',
         'password',
-        'password_confirmation',
+        'passwordConfirmation',
       ]
 
       for (const field of requiredFields) {
@@ -36,9 +36,9 @@ export class SignUpController implements Controller {
         }
       }
 
-      const { name, email, password, password_confirmation } = httpRequest.body
+      const { name, email, password, passwordConfirmation } = httpRequest.body
 
-      if (password !== password_confirmation) {
+      if (password !== passwordConfirmation) {
         return badRequest(new InvalidPasswordConfirmationError())
       }
 
